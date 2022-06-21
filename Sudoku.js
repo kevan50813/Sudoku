@@ -1,4 +1,4 @@
-class Board {
+class Sudoku {
   constructor() {}
 
   i2rc(index) {
@@ -44,5 +44,22 @@ class Board {
     }
 
     return true;
+  }
+
+  solve(index) {
+    while (index < 81 && board[index]) {
+      index++;
+    }
+    if (index == 81) {
+      let moves = this.getChoices(board, index);
+      for (let m of moves) {
+        board[index] = m;
+        if (this.solve(index + 1)) {
+          return true;
+        }
+      }
+      board[index] = 0;
+      return false;
+    }
   }
 }
